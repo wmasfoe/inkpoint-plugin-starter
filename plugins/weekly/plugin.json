@@ -1,0 +1,12 @@
+{
+  "manifest": {
+    "id": "example.weekly",
+    "name": "Weekly note",
+    "version": "1.0.0",
+    "description": "Insert a configurable weekly note template.",
+    "apiVersion": 1
+  },
+  "entry": "index.ts",
+  "examples": [{ "id": "weekly", "name": "Weekly note", "markdown": "# My week\n" }],
+  "settings": { "heading": { "type": "string", "label": "Heading", "default": "Weekly review" } }
+}

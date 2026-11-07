@@ -1,0 +1,17 @@
+{
+  "name": "inkpoint-plugin-starter",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Starter template for building Inkpoint (md-editor) plugins distributed through GitHub Releases.",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@md-editor/plugin-sdk": "file:vendor/plugin-sdk",
+    "typescript": "^5.8.0",
+    "vite": "^6.0.0"
+  }
+}

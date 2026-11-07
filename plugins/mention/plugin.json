@@ -1,0 +1,18 @@
+{
+  "manifest": {
+    "id": "example.mention",
+    "name": "Mention syntax",
+    "version": "1.0.0",
+    "description": "Recognize simple @mentions in Markdown.",
+    "apiVersion": 1
+  },
+  "entry": "index.ts",
+  "examples": [
+    {
+      "id": "mention",
+      "name": "Mention",
+      "markdown": "Hello @inkpoint"
+    }
+  ],
+  "styles": "style.css"
+}
