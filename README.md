@@ -128,8 +128,14 @@ export default definePlugin({
 ### Rules that the build enforces
 
 - **IDs are namespaced.** Contribution IDs (commands, keymaps, syntax) must start
-  with `<plugin id>.`. Lezer node names use the PascalCase of the plugin ID segments
-  (e.g. `author.weekly` -> `AuthorWeekly`) plus your own suffix.
+  with `<plugin id>.`. Lezer node names must start with the prefix derived from the
+  plugin ID, followed by your own suffix. The prefix PascalCases each `.` segment,
+  turns `-` inside a segment into `_`, and ends with `_`:
+  `author.weekly` -> `AuthorWeekly_`, `my-org.tool` -> `My_OrgTool_`.
+  So the `example.mention` plugin names its node `ExampleMention_Reference`.
+- **Shortcut conflicts don't break your plugin.** If a user's override (or your
+  default key) is invalid or already taken, the app falls back to your default key
+  or skips just that shortcut. Your command stays available in the command palette.
 - **Never bundle CodeMirror/Lezer.** Import them only as *types*; get the runtime
   from `context.dependencies`. The build rejects runtime imports of
   `@codemirror/*` and `@lezer/*`.

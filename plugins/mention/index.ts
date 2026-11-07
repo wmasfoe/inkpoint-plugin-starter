@@ -5,7 +5,7 @@ export default definePlugin({
     context.syntax.register({
       id: "example.mention.syntax",
       name: "Mention syntax",
-      nodePolicy: { nodeName: "ExampleMentionReference", kind: "raw-fallback", isBlock: false },
+      nodePolicy: { nodeName: "ExampleMention_Reference", kind: "raw-fallback", isBlock: false },
       buildDecorations(record) {
         const { from, to } = record.fullRange;
         return from < to
@@ -17,15 +17,15 @@ export default definePlugin({
           : [];
       },
       markdownExtension: {
-        defineNodes: ["ExampleMentionReference"],
+        defineNodes: ["ExampleMention_Reference"],
         parseInline: [
           {
-            name: "ExampleMentionReference",
+            name: "ExampleMention_Reference",
             parse(cx, next, pos) {
               if (next !== 64) return -1;
               const match = /^@[a-zA-Z][\w-]*/.exec(cx.slice(pos, cx.end));
               return match
-                ? cx.addElement(cx.elt("ExampleMentionReference", pos, pos + match[0].length))
+                ? cx.addElement(cx.elt("ExampleMention_Reference", pos, pos + match[0].length))
                 : -1;
             },
           },
