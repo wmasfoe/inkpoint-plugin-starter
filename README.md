@@ -52,8 +52,6 @@ plugins/
 scripts/
   build.mjs             # builds each plugin into a self-contained *.inkpoint.json
   validate.mjs          # validates examples + settings shape
-vendor/
-  plugin-sdk/           # vendored @md-editor/plugin-sdk public contract (see note)
 .github/workflows/
   release.yml           # tag push -> typecheck -> build -> draft Release -> publish
 ```
@@ -162,14 +160,10 @@ Release is never installable.
 
 ---
 
-## About the vendored SDK
+## The SDK dependency
 
-This template depends on `@md-editor/plugin-sdk`. Until that package is published to
-a public npm registry, the repo ships a **vendored copy** of its public contract under
-`vendor/plugin-sdk/` and resolves it via `"@md-editor/plugin-sdk": "file:vendor/plugin-sdk"`
-in `package.json`. This keeps the fork buildable with zero registry access.
-
-Once the SDK is published, replace that dependency with the published version, e.g.:
+This template depends on [`@md-editor/plugin-sdk`](https://www.npmjs.com/package/@md-editor/plugin-sdk),
+installed from npm like any other dev dependency:
 
 ```jsonc
 "devDependencies": {
@@ -177,11 +171,21 @@ Once the SDK is published, replace that dependency with the published version, e
 }
 ```
 
-and delete `vendor/plugin-sdk/`. The import path (`@md-editor/plugin-sdk`) stays the same.
+The SDK ships only types plus the `definePlugin` identity helper — it is not the
+editor runtime. CodeMirror and Lezer are injected by the host at runtime via
+`context.dependencies`, so plugins must **not** bundle them.
 
-> The vendored copy mirrors only the public contract (types + the `definePlugin`
-> identity helper). It is not the editor runtime; CodeMirror and Lezer are injected
-> by the host at runtime.
+CodeMirror / Lezer are declared as the SDK's **optional peer dependencies**. You
+only need them installed when you author syntax plugins that reference their
+types (like the `mention` example). This template already lists them as
+`devDependencies` so type-checking works out of the box:
+
+```jsonc
+"@codemirror/state", "@codemirror/view", "@lezer/common", "@lezer/markdown"
+```
+
+If you only write command/template plugins, you can drop those four from
+`devDependencies`.
 
 ---
 

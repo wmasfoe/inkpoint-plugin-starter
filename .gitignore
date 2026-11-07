@@ -1,3 +1,2 @@
-# Only ignore the repo-root build artifacts, not the vendored SDK's committed dist.
-/node_modules/
-/dist/
+node_modules/
+dist/
